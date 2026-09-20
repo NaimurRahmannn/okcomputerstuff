@@ -1,4 +1,4 @@
-const API_PREFIX = "/api/v1";
+const API_PREFIX = typeof window !== "undefined" && window.location.port === "4173" ? "http://127.0.0.1:5050/api/v1" : "/api/v1";
 
 export function formatDate(value) {
   if (!value) return "Unpublished";
