@@ -1,4 +1,4 @@
-# Inkwell Blog Full-Stack Implementation Plan
+# okcomputerstuff Full-Stack Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -344,7 +344,7 @@ git commit -m "feat: add public editorial frontend"
 ```tsx
 it("redirects anonymous users to login", async () => {
   render(<MemoryRouter initialEntries={["/admin"]}><App /></MemoryRouter>);
-  expect(await screen.findByRole("heading", { name: "Sign in to Inkwell" })).toBeVisible();
+  expect(await screen.findByRole("heading", { name: "Sign in to okcomputerstuff" })).toBeVisible();
 });
 ```
 
@@ -427,8 +427,8 @@ git commit -m "docs: document local development and data seeding"
 ### Task 8: Add EC2 deployment assets and Jenkins pipeline
 
 **Files:**
-- Create: `deploy/inkwell-api.service`
-- Create: `deploy/apache-inkwell.conf`
+- Create: `deploy/okcomputerstuff-api.service`
+- Create: `deploy/apache-okcomputerstuff.conf`
 - Create: `deploy/deploy.sh`
 - Create: `deploy/smoke-test.sh`
 - Create: `deploy/tests.sh`
@@ -436,7 +436,7 @@ git commit -m "docs: document local development and data seeding"
 - Modify: `README.md`
 
 **Interfaces:**
-- `deploy.sh <release.tar.gz>` extracts the release to `/opt/inkwell/releases/<timestamp>`, updates `/opt/inkwell/current`, installs backend dependencies, and restarts `inkwell-api.service`.
+- `deploy.sh <release.tar.gz>` extracts the release to `/opt/okcomputerstuff/releases/<timestamp>`, updates `/opt/okcomputerstuff/current`, installs backend dependencies, and restarts `okcomputerstuff-api.service`.
 - `smoke-test.sh <base-url>` exits non-zero unless `/api/v1/health` returns HTTP `200` and `database` is `ok`.
 - Jenkins parameters: `DEPLOY_PRODUCTION` (boolean) and `RUN_DB_MIGRATIONS` (boolean).
 
@@ -446,14 +446,14 @@ git commit -m "docs: document local development and data seeding"
 #!/usr/bin/env bash
 set -euo pipefail
 
-grep -q "ProxyPass /api http://127.0.0.1:8000/api" deploy/apache-inkwell.conf
+grep -q "ProxyPass /api http://127.0.0.1:8000/api" deploy/apache-okcomputerstuff.conf
 ! ./deploy/smoke-test.sh "http://127.0.0.1:9"
 echo "deployment asset tests passed"
 ```
 
 ```bash
 test_apache_config_proxies_api() {
-  grep -q "ProxyPass /api http://127.0.0.1:8000/api" deploy/apache-inkwell.conf
+  grep -q "ProxyPass /api http://127.0.0.1:8000/api" deploy/apache-okcomputerstuff.conf
 }
 ```
 

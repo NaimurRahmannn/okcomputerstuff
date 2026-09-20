@@ -3,7 +3,7 @@ import os
 
 class Config:
     SECRET_KEY = os.getenv("SECRET_KEY", "dev-only-change-me")
-    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", "sqlite:///inkwell.db")
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", "sqlite:///okcomputerstuff.db")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SAMESITE = "Lax"
@@ -19,4 +19,3 @@ class TestingConfig(Config):
 
 class ProductionConfig(Config):
     SESSION_COOKIE_SECURE = True
-

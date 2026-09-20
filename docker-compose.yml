@@ -3,14 +3,14 @@ services:
     image: mysql:8.4
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: inkwell
+      MYSQL_DATABASE: okcomputerstuff
       MYSQL_USER: blog_user
       MYSQL_PASSWORD: change-me
       MYSQL_ROOT_PASSWORD: root-change-me
     ports:
       - "3307:3306"
     volumes:
-      - inkwell_mysql:/var/lib/mysql
+      - okcomputerstuff_mysql:/var/lib/mysql
 
 volumes:
-  inkwell_mysql:
+  okcomputerstuff_mysql:

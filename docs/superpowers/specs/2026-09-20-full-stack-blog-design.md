@@ -1,4 +1,4 @@
-# Inkwell Blog — Full-Stack Blog Design
+# okcomputerstuff — Full-Stack Blog Design
 
 ## Goal
 
@@ -99,7 +99,7 @@ The first migration creates these tables and a seed command creates the initial 
 ## Repository structure
 
 ```text
-inkwell-blog/
+okcomputerstuff/
   frontend/       # React/Vite app, public pages, admin UI
   backend/        # Flask app, API routes, models, migrations
   deploy/         # systemd and web-server templates, deployment notes

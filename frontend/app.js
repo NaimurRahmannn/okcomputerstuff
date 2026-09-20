@@ -36,8 +36,8 @@ async function apiRequest(path, options = {}) {
   return payload.data;
 }
 
-function shell(content, { eyebrow = "Inkwell", title = "Stories for a slower internet" } = {}) {
-  return `<header class="site-header"><a class="wordmark" href="#/" aria-label="Inkwell home"><span class="wordmark-mark">I</span><span>inkwell</span></a><nav><a href="#/">Journal</a><a href="#/about">About</a><a class="nav-admin" href="#/admin">Write</a></nav></header><main>${content}</main><footer class="site-footer"><span>© 2026 Inkwell Journal</span><span>Notes on craft, cloud, and a life well observed.</span></footer>`;
+function shell(content, { eyebrow = "okcomputerstuff", title = "Stories for a slower internet" } = {}) {
+  return `<header class="site-header"><a class="wordmark" href="#/" aria-label="okcomputerstuff home"><span class="wordmark-mark">O</span><span>okcomputerstuff</span></a><nav><a href="#/">Journal</a><a href="#/about">About</a><a class="nav-admin" href="#/admin">Write</a></nav></header><main>${content}</main><footer class="site-footer"><span>© 2026 okcomputerstuff Journal</span><span>Notes on craft, cloud, and a life well observed.</span></footer>`;
 }
 
 function loading(message = "Gathering the latest notes…") { return `<div class="state"><span class="spinner"></span>${message}</div>`; }
@@ -75,7 +75,7 @@ async function renderPost(root, slug) {
 }
 
 function renderAbout(root) {
-  root.innerHTML = shell(`<section class="about-page"><p class="eyebrow">A little context</p><h1>Hello, I’m the<br><em>person behind</em> Inkwell.</h1><div class="about-columns"><p class="about-lede">I write about the intersection of thoughtful technology and ordinary life — the tools we make, the systems we learn, and the quiet practices that keep us human.</p><div><p>Inkwell is a small corner of the internet for work-in-progress thinking. No hot takes required. Just useful notes, honest experiments, and the occasional long walk.</p><a class="button button-outline" href="mailto:hello@example.com">Say hello <span>↗</span></a></div></div></section>`);
+  root.innerHTML = shell(`<section class="about-page"><p class="eyebrow">A little context</p><h1>Hello, I’m the<br><em>person behind</em> okcomputerstuff.</h1><div class="about-columns"><p class="about-lede">I write about the intersection of thoughtful technology and ordinary life — the tools we make, the systems we learn, and the quiet practices that keep us human.</p><div><p>okcomputerstuff is a small corner of the internet for work-in-progress thinking. No hot takes required. Just useful notes, honest experiments, and the occasional long walk.</p><a class="button button-outline" href="mailto:hello@example.com">Say hello <span>↗</span></a></div></div></section>`);
 }
 
 function loginView(root) {

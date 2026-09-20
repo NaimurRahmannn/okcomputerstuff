@@ -1,6 +1,6 @@
-# Inkwell Blog
+# okcomputerstuff
 
-Inkwell is a lightweight full-stack personal blog. It gives visitors a polished editorial reading experience and gives the author a private studio for writing Markdown posts, saving drafts, publishing stories, and managing the journal.
+okcomputerstuff is a lightweight full-stack personal blog. It gives visitors a polished editorial reading experience and gives the author a private studio for writing Markdown posts, saving drafts, publishing stories, and managing the journal.
 
 ## Stack
 
@@ -22,13 +22,13 @@ This workspace's managed Python image does not ship a writable `ensurepip`; its 
 docker compose up -d db
 ```
 
-Set `DATABASE_URL=mysql+pymysql://blog_user:change-me@127.0.0.1:3307/inkwell` and the admin variables from `backend/.env.example` in your shell.
+Set `DATABASE_URL=mysql+pymysql://blog_user:change-me@127.0.0.1:3307/okcomputerstuff` and the admin variables from `backend/.env.example` in your shell.
 
 ### Initialize and run the API
 
 ```powershell
 $env:PYTHONPATH = "backend"
-$env:DATABASE_URL = "sqlite:///inkwell.db"  # use the MySQL URL when Docker/RDS is ready
+$env:DATABASE_URL = "sqlite:///okcomputerstuff.db"  # use the MySQL URL when Docker/RDS is ready
 $env:ADMIN_EMAIL = "you@example.com"
 $env:ADMIN_PASSWORD = "change-me-now"
 .\.venv\Scripts\python.exe -m flask --app backend.run init-db

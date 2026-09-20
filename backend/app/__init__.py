@@ -47,7 +47,7 @@ def create_app(config_overrides=None):
         from .models import User
         email = os.getenv("ADMIN_EMAIL")
         password = os.getenv("ADMIN_PASSWORD")
-        display_name = os.getenv("ADMIN_DISPLAY_NAME", "Inkwell author")
+        display_name = os.getenv("ADMIN_DISPLAY_NAME", "okcomputerstuff author")
         if not email or not password:
             raise RuntimeError("ADMIN_EMAIL and ADMIN_PASSWORD must be set")
         with app.app_context():
