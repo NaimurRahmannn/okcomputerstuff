@@ -11,3 +11,4 @@ backend/instance/
 backend/pytest-cache-files-*/
 .tmp/
 .superpowers/
+docs/
