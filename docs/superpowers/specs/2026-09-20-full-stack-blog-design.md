@@ -17,13 +17,13 @@ The existing `devops-project-1-main` repository is a separate repository and is 
 
 ## Recommended approach
 
-Use a small monorepo with a React/Vite frontend, a Flask REST API, and SQLAlchemy-backed MySQL persistence. Build the frontend into static assets served by Apache. Run the Flask API with Gunicorn behind the same web server, proxying `/api` requests to the backend. This keeps the deployment topology close to the user's existing EC2, Apache, RDS, and Jenkins setup while retaining a polished browser experience.
+Use a small monorepo with a framework-free HTML/CSS/JavaScript frontend, a Flask REST API, and SQLAlchemy-backed MySQL persistence. Build the frontend as static assets served by Apache. Run the Flask API with Gunicorn behind the same web server, proxying `/api` requests to the backend. This keeps the deployment topology close to the user's existing EC2, Apache, RDS, and Jenkins setup while retaining a polished browser experience.
 
 Alternatives considered:
 
 1. Server-rendered Flask templates: simplest deployment, but less useful for learning a modern full-stack split and less flexible for a rich editor.
 2. React + Node/Express: a valid SPA stack, but adds a second JavaScript runtime to the EC2 deployment when Flask/Python already aligns with the existing project context.
-3. React + Flask + RDS (selected): a clear frontend/API/database boundary, lightweight runtime requirements, and a natural path for future mobile or alternate clients.
+3. Vanilla HTML/CSS/JavaScript + Flask + RDS (selected): a clear frontend/API/database boundary, no frontend framework runtime, and a natural path for future mobile or alternate clients.
 
 ## User-facing experience
 
@@ -108,7 +108,7 @@ inkwell-blog/
   README.md
 ```
 
-The frontend owns API client helpers and presentation. The backend owns validation, authentication, persistence, and serialization. Neither layer reaches into the other's internal files.
+The frontend owns API client helpers and presentation in small browser modules. The backend owns validation, authentication, persistence, and serialization. Neither layer reaches into the other's internal files.
 
 ## Data flow
 

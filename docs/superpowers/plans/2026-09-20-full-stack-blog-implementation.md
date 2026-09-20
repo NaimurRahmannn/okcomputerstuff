@@ -4,9 +4,9 @@
 
 **Goal:** Build a single-author publishing site with a React/Vite frontend, Flask REST API, MySQL persistence, authenticated admin editor, and Jenkins/EC2 deployment assets.
 
-**Architecture:** The browser receives static React assets from Apache. Apache proxies `/api` to a Gunicorn-hosted Flask application, which uses SQLAlchemy to persist users and posts in MySQL/RDS. A same-origin HTTP-only session cookie protects admin operations.
+**Architecture:** The browser receives static HTML/CSS/JavaScript assets from Apache. Apache proxies `/api` to a Gunicorn-hosted Flask application, which uses SQLAlchemy to persist users and posts in MySQL/RDS. A same-origin HTTP-only session cookie protects admin operations.
 
-**Tech Stack:** Python 3.11, Flask 3, SQLAlchemy 2, Flask-Migrate/Alembic, pytest, React 18, Vite, TypeScript, Vitest, React Testing Library, plain CSS, MySQL 8-compatible RDS, Gunicorn, Apache, Jenkins.
+**Tech Stack:** Python 3.11, Flask 3, SQLAlchemy 2, pytest, HTML, CSS, browser JavaScript, Node's built-in test runner, MySQL 8-compatible RDS, Gunicorn, Apache, Jenkins.
 
 **Spec:** `docs/superpowers/specs/2026-09-20-full-stack-blog-design.md`
 
@@ -18,7 +18,7 @@
 - The API base prefix is `/api/v1` and must return consistent JSON error envelopes.
 - Markdown rendered in the browser must be sanitized before insertion into the DOM.
 - The implementation follows test-driven development: each behavior starts with a focused failing test.
-- The production topology is static frontend + Apache reverse proxy + Gunicorn Flask API + private MySQL/RDS.
+- The production topology is static HTML/CSS/JavaScript frontend + Apache reverse proxy + Gunicorn Flask API + private MySQL/RDS.
 
 ## Review Focus
 
