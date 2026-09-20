@@ -12,3 +12,4 @@ backend/pytest-cache-files-*/
 .tmp/
 .superpowers/
 docs/
+.vscode/
