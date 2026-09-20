@@ -16,3 +16,8 @@ test("phone layout prevents horizontal overflow in flexible rows", () => {
 test("tablet layout has a two-column post grid", () => {
   assert.match(css, /@media\s*\(min-width:\s*761px\)\s*and\s*\(max-width:\s*1099px\)[\s\S]*?\.post-grid\s*\{[^}]*grid-template-columns:\s*repeat\(2,\s*1fr\)/s);
 });
+
+test("about heading scales and wraps on narrow screens", () => {
+  assert.match(css, /@media\s*\(max-width:\s*760px\)[\s\S]*?\.about-page h1\s*\{[^}]*font-size:\s*clamp\(42px,\s*12vw,\s*55px\)/s);
+  assert.match(css, /\.about-page h1\s*\{[^}]*overflow-wrap:\s*anywhere/s);
+});
