@@ -67,6 +67,8 @@ main,
   border-radius: 50%;
   font-family: var(--serif);
   font-style: italic;
+  line-height: 1;
+  padding-right: 2px;
 }
 nav {
   display: flex;
