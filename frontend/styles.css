@@ -222,9 +222,25 @@ h1 em,
 .hero-art {
   position: relative;
   min-height: 390px;
+  display: grid;
+  place-items: center;
+  padding: 22px;
   overflow: hidden;
-  background: #d8ddd5;
-  border-radius: 260px 260px 16px 16px;
+  background: #ebe7df;
+  border: 1px solid #d8d1c5;
+  border-radius: 6px 34px 6px 34px;
+  box-shadow: 0 24px 46px rgba(28, 39, 36, 0.15), 12px 12px 0 #d5cdbf;
+}
+.hero-art-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 590px;
+  object-fit: contain;
+  object-position: center;
+  border: 12px solid var(--paper);
+  border-radius: 2px;
+  box-shadow: 0 8px 22px rgba(28, 39, 36, 0.12);
 }
 .sun {
   position: absolute;
@@ -697,16 +713,19 @@ select:focus {
     min-height: 0;
     grid-template-columns: 1fr;
     gap: 45px;
-    padding: 75px 0 85px;
+    padding: 75px 0 28px;
   }
   .hero h1 {
     font-size: 58px;
   }
   .hero-art {
     min-height: 280px;
+    padding: 12px;
+    border-radius: 5px 24px 5px 24px;
+    box-shadow: 0 16px 30px rgba(28, 39, 36, 0.13), 8px 8px 0 #d5cdbf;
   }
   .section {
-    padding: 60px 0 90px;
+    padding: 30px 0 90px;
   }
   .section-heading,
   .admin-heading,
