@@ -1,9 +1,16 @@
+from urllib.parse import urlparse
+
 from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 
 from .config import Config
 
 db = SQLAlchemy()
+
+
+def is_local_origin(origin):
+    parsed = urlparse(origin or "")
+    return parsed.scheme == "http" and parsed.hostname in {"127.0.0.1", "localhost"}
 
 
 def create_app(config_overrides=None):
@@ -22,13 +29,13 @@ def create_app(config_overrides=None):
 
     @app.before_request
     def handle_local_preflight():
-        if request.method == "OPTIONS" and request.headers.get("Origin") in {"http://127.0.0.1:4173", "http://localhost:4173"}:
+        if request.method == "OPTIONS" and is_local_origin(request.headers.get("Origin")):
             return ("", 204)
 
     @app.after_request
     def add_local_cors_headers(response):
         origin = request.headers.get("Origin")
-        if origin in {"http://127.0.0.1:4173", "http://localhost:4173"}:
+        if is_local_origin(origin):
             response.headers["Access-Control-Allow-Origin"] = origin
             response.headers["Access-Control-Allow-Credentials"] = "true"
             response.headers["Access-Control-Allow-Headers"] = "Content-Type"

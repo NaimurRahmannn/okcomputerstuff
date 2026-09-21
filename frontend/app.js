@@ -1,4 +1,10 @@
-const API_PREFIX = typeof window !== "undefined" && window.location.port === "4173" ? "http://127.0.0.1:5050/api/v1" : "/api/v1";
+export function resolveApiPrefix(location) {
+  const isLocalHost = location?.hostname === "127.0.0.1" || location?.hostname === "localhost";
+  const isKnownLocalFrontend = location?.port === "4173" || (isLocalHost && location?.port !== "5000");
+  return isKnownLocalFrontend ? "http://127.0.0.1:5000/api/v1" : "/api/v1";
+}
+
+const API_PREFIX = resolveApiPrefix(typeof window !== "undefined" ? window.location : null);
 
 export function formatDate(value) {
   if (!value) return "Unpublished";
@@ -18,13 +24,22 @@ function escapeHtml(value) {
   return String(value).replace(/[&<>"']/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" })[character]);
 }
 
+function renderMathExpression(value) {
+  let math = escapeHtml(value).trim();
+  math = math.replace(/\\text\{([^{}]*)\}/g, '<span class="math-text">$1</span>');
+  math = math.replace(/\\frac\{([^{}]*)\}\{([^{}]*)\}/g, '<span class="math-fraction"><span>$1</span><span>$2</span></span>');
+  math = math.replace(/\\times/g, "&times;").replace(/\\approx/g, "&asymp;").replace(/\\min/g, "min");
+  return math;
+}
+
 export function renderMarkdown(markdown = "") {
   const safe = escapeHtml(markdown);
   return safe.split(/\n{2,}/).map((block) => {
+    if (block.startsWith("$$") && block.endsWith("$$")) return `<div class="math-display" role="math">${renderMathExpression(block.slice(2, -2))}</div>`;
     if (block.startsWith("### ")) return `<h3>${block.slice(4)}</h3>`;
     if (block.startsWith("## ")) return `<h2>${block.slice(3)}</h2>`;
     if (block.startsWith("# ")) return `<h1>${block.slice(2)}</h1>`;
-    const inline = block.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>").replace(/\*(.+?)\*/g, "<em>$1</em>").replace(/`(.+?)`/g, "<code>$1</code>");
+    const inline = block.replace(/\$([^$]+)\$/g, (_, expression) => `<span class="math-inline" role="math">${renderMathExpression(expression)}</span>`).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>").replace(/\*(.+?)\*/g, "<em>$1</em>").replace(/`(.+?)`/g, "<code>$1</code>");
     return `<p>${inline.replace(/\n/g, "<br>")}</p>`;
   }).join("");
 }
@@ -34,6 +49,14 @@ async function apiRequest(path, options = {}) {
   const payload = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(payload.error?.message || "Something went wrong");
   return payload.data;
+}
+
+export function navigateTo(hash, rerender = route) {
+  if (window.location.hash === hash) {
+    rerender();
+    return;
+  }
+  window.location.hash = hash;
 }
 
 function shell(content, { eyebrow = "okcomputerstuff", title = "Stories for a slower internet" } = {}) {
@@ -75,7 +98,7 @@ async function renderPost(root, slug) {
 }
 
 function renderAbout(root) {
-  root.innerHTML = shell(`<section class="about-page"><p class="eyebrow">A little context</p><h1>Hello, I’m the<br><em>person behind</em> okcomputerstuff.</h1><div class="about-columns"><p class="about-lede">I write about the intersection of thoughtful technology and ordinary life — the tools we make, the systems we learn, and the quiet practices that keep us human.</p><div><p>okcomputerstuff is a small corner of the internet for work-in-progress thinking. No hot takes required. Just useful notes, honest experiments, and the occasional long walk.</p><a class="button button-outline" href="mailto:hello@example.com">Say hello <span>↗</span></a></div></div></section>`);
+  root.innerHTML = shell(`<section class="about-page"><p class="eyebrow">A little context</p><h1>Hello, this is Lam—I’m the<br><em>person behind</em> okcomputerstuff.</h1><div class="about-columns"><p class="about-lede">I write about the intersection of thoughtful technology and ordinary life — the tools we make, the systems we learn, and the quiet practices that keep us human.</p><div><p>okcomputerstuff is a small corner of the internet for work-in-progress thinking. No hot takes required. Just useful notes, honest experiments, and the occasional long walk.</p><a class="button button-outline" href="mailto:hello@example.com">Say hello <span>↗</span></a></div></div></section>`);
 }
 
 function loginView(root) {
@@ -83,7 +106,7 @@ function loginView(root) {
   root.querySelector("#login-form").addEventListener("submit", async (event) => {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
-    try { await apiRequest("/auth/login", { method: "POST", body: JSON.stringify({ email: form.get("email"), password: form.get("password") }) }); window.location.hash = "#/admin"; }
+    try { await apiRequest("/auth/login", { method: "POST", body: JSON.stringify({ email: form.get("email"), password: form.get("password") }) }); navigateTo("#/admin"); }
     catch (error) { root.querySelector("#login-error").textContent = error.message; }
   });
 }
@@ -101,7 +124,13 @@ async function renderAdmin(root) {
   } catch (error) { root.querySelector("#admin-posts").innerHTML = errorState(error.message); }
 }
 
-async function renderEditor(root, slug = null) {
+export async function renderEditor(root, slug = null) {
+  try {
+    await apiRequest("/auth/me");
+  } catch {
+    loginView(root);
+    return;
+  }
   let post = { title: "", excerpt: "", category: "Notes", contentMarkdown: "", status: "draft", coverImageUrl: "" };
   if (slug) {
     try { post = await apiRequest(`/posts/${encodeURIComponent(slug)}`); } catch (error) { root.innerHTML = shell(errorState(error.message)); return; }

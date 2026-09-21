@@ -23,6 +23,41 @@ body {
   font-family: var(--sans);
   line-height: 1.6;
 }
+.math-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35em;
+  margin: 1.8em 0;
+  padding: 0.8em;
+  overflow-x: auto;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1.15em;
+  text-align: center;
+}
+.math-inline {
+  font-family: var(--serif);
+  white-space: nowrap;
+}
+.math-fraction {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  vertical-align: middle;
+  line-height: 1.15;
+  text-align: center;
+}
+.math-fraction > span:first-child {
+  padding: 0 0.25em 0.12em;
+  border-bottom: 1px solid currentColor;
+}
+.math-fraction > span:last-child {
+  padding: 0.12em 0.25em 0;
+}
+.math-text {
+  font-style: normal;
+}
 a {
   color: inherit;
   text-decoration: none;

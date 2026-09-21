@@ -46,7 +46,7 @@ Serve the static frontend from the project root so browser requests and history 
 python -m http.server 4173 --directory frontend
 ```
 
-Open `http://127.0.0.1:4173`. The frontend automatically targets the local API on port 5050 and Flask allows only the two documented localhost origins for this development flow. Production uses same-origin `/api` requests behind Apache.
+Open `http://127.0.0.1:4173`. The frontend automatically targets the local API on port 5000 and Flask allows only the two documented localhost origins for this development flow. Production uses same-origin `/api` requests behind Apache.
 
 ## API examples
 

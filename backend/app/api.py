@@ -52,7 +52,7 @@ def create_post(payload, author_id):
 
 
 def post_query(include_drafts=False):
-    query = db.select(Post).order_by(Post.published_at.desc().nullslast(), Post.created_at.desc())
+    query = db.select(Post).order_by(Post.published_at.is_(None), Post.published_at.desc(), Post.created_at.desc())
     if not include_drafts:
         query = query.where(Post.status == "published")
     category = request.args.get("category")
