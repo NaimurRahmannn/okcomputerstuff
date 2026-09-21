@@ -11,6 +11,7 @@ test("phone layout prevents horizontal overflow in flexible rows", () => {
   assert.match(css, /\.admin-actions\s*\{[^}]*flex-wrap:\s*wrap/s);
   assert.match(css, /\.filters\s*\{[^}]*flex-wrap:\s*wrap/s);
   assert.match(css, /\.article-body\s*\{[^}]*overflow-wrap:\s*anywhere/s);
+  assert.match(css, /@media\s*\(max-width:\s*760px\)[\s\S]*?\.post-card-featured \.post-card-image[\s\S]*?margin:\s*-24px -24px 24px/s);
 });
 
 test("tablet layout has a two-column post grid", () => {

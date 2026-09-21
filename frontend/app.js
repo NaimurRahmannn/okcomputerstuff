@@ -70,8 +70,14 @@ function shell(content, { eyebrow = "okcomputerstuff", title = "Stories for a sl
 function loading(message = "Gathering the latest notes…") { return `<div class="state"><span class="spinner"></span>${message}</div>`; }
 function errorState(message) { return `<div class="state state-error"><strong>We hit a quiet snag.</strong><span>${escapeHtml(message)}</span><a class="text-link" href="#/">Try again</a></div>`; }
 
+export function coverImageMarkup(url, alt, className) {
+  const imageUrl = String(url || "").trim();
+  if (!/^https:\/\//i.test(imageUrl)) return "";
+  return `<img class="${className}" src="${escapeHtml(imageUrl)}" alt="${escapeHtml(alt)}" loading="lazy" decoding="async" referrerpolicy="no-referrer">`;
+}
+
 function postCard(post, featured = false) {
-  return `<article class="post-card ${featured ? "post-card-featured" : ""}"><div class="post-card-meta"><span class="tag">${escapeHtml(post.category)}</span><time>${formatDate(post.publishedAt)}</time></div><h2><a href="#/post/${encodeURIComponent(post.slug)}">${escapeHtml(post.title)}</a></h2><p>${escapeHtml(post.excerpt || "A new note from the journal.")}</p><a class="text-link" href="#/post/${encodeURIComponent(post.slug)}">Read story <span>↗</span></a></article>`;
+  return `<article class="post-card ${featured ? "post-card-featured" : ""}">${coverImageMarkup(post.coverImageUrl, post.title, "post-card-image")}<div class="post-card-meta"><span class="tag">${escapeHtml(post.category)}</span><time>${formatDate(post.publishedAt)}</time></div><h2><a href="#/post/${encodeURIComponent(post.slug)}">${escapeHtml(post.title)}</a></h2><p>${escapeHtml(post.excerpt || "A new note from the journal.")}</p><a class="text-link" href="#/post/${encodeURIComponent(post.slug)}">Read story <span>↗</span></a></article>`;
 }
 
 async function renderHome(root) {
@@ -97,7 +103,7 @@ async function renderPost(root, slug) {
   root.innerHTML = shell(`<div class="article-loading">${loading()}</div>`);
   try {
     const post = await apiRequest(`/posts/${encodeURIComponent(slug)}`);
-    root.innerHTML = shell(`<article class="article"><a class="back-link" href="#/">← Back to journal</a><div class="article-header"><span class="tag">${escapeHtml(post.category)}</span><h1>${escapeHtml(post.title)}</h1><p class="article-excerpt">${escapeHtml(post.excerpt || "")}</p><time>${formatDate(post.publishedAt)}</time></div><div class="article-rule"></div><div class="article-body">${renderMarkdown(post.contentMarkdown || "")}</div><div class="article-endmark">✦</div></article>`);
+    root.innerHTML = shell(`<article class="article"><a class="back-link" href="#/">← Back to journal</a><div class="article-header"><span class="tag">${escapeHtml(post.category)}</span><h1>${escapeHtml(post.title)}</h1><p class="article-excerpt">${escapeHtml(post.excerpt || "")}</p><time>${formatDate(post.publishedAt)}</time></div>${coverImageMarkup(post.coverImageUrl, post.title, "article-cover-image")}<div class="article-rule"></div><div class="article-body">${renderMarkdown(post.contentMarkdown || "")}</div><div class="article-endmark">✦</div></article>`);
   } catch (error) { root.innerHTML = shell(errorState(error.message)); }
 }
 

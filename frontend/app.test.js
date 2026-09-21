@@ -37,6 +37,11 @@ test("renders fenced code as a mobile-safe code block", () => {
   assert.doesNotMatch(html, /<p>```/);
 });
 
+test("renders secure cover image URLs and rejects unsafe URLs", () => {
+  assert.match(app.coverImageMarkup("https://res.cloudinary.com/example/image.jpg", "Story cover", "post-card-image"), /<img class="post-card-image"/);
+  assert.doesNotMatch(app.coverImageMarkup("javascript:alert(1)", "Unsafe", "post-card-image"), /<img/);
+});
+
 test("rerenders when navigation targets the current admin route", () => {
   const originalWindow = globalThis.window;
   let renderCount = 0;
