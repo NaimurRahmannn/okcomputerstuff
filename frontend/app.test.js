@@ -31,6 +31,12 @@ test("renders display math fractions safely", () => {
   assert.match(html, /Bytes Moved/);
 });
 
+test("renders fenced code as a mobile-safe code block", () => {
+  const html = renderMarkdown("```text\ntoken1 -> token2 -> token3 -> token4 -> ...\n```");
+  assert.match(html, /<pre><code>token1 -&gt; token2 -&gt; token3 -&gt; token4 -&gt; \.\.\.<\/code><\/pre>/);
+  assert.doesNotMatch(html, /<p>```/);
+});
+
 test("rerenders when navigation targets the current admin route", () => {
   const originalWindow = globalThis.window;
   let renderCount = 0;

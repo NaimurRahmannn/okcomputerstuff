@@ -35,6 +35,10 @@ function renderMathExpression(value) {
 export function renderMarkdown(markdown = "") {
   const safe = escapeHtml(markdown);
   return safe.split(/\n{2,}/).map((block) => {
+    if (block.startsWith("```") && block.endsWith("```")) {
+      const lines = block.split("\n");
+      return `<pre><code>${lines.slice(1, -1).join("\n")}</code></pre>`;
+    }
     if (block.startsWith("$$") && block.endsWith("$$")) return `<div class="math-display" role="math">${renderMathExpression(block.slice(2, -2))}</div>`;
     if (block.startsWith("### ")) return `<h3>${block.slice(4)}</h3>`;
     if (block.startsWith("## ")) return `<h2>${block.slice(3)}</h2>`;

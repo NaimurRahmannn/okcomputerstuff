@@ -24,21 +24,44 @@ body {
   line-height: 1.6;
 }
 .math-display {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.35em;
+  max-width: 100%;
+  display: block;
   margin: 1.8em 0;
   padding: 0.8em;
   overflow-x: auto;
   color: var(--ink);
   font-family: var(--serif);
   font-size: 1.15em;
+  line-height: 1.5;
+  white-space: nowrap;
   text-align: center;
 }
+.article-body pre,
+.markdown-preview pre {
+  max-width: 100%;
+  margin: 1.5em 0;
+  padding: 1em;
+  overflow-x: auto;
+  color: var(--paper);
+  background: var(--ink);
+  border-radius: 4px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.article-body pre code,
+.markdown-preview pre code {
+  padding: 0;
+  color: inherit;
+  background: transparent;
+  font-size: 0.82em;
+  white-space: inherit;
+}
 .math-inline {
+  display: inline-block;
+  max-width: 100%;
   font-family: var(--serif);
-  white-space: nowrap;
+  overflow-wrap: anywhere;
+  vertical-align: middle;
 }
 .math-fraction {
   display: inline-flex;
